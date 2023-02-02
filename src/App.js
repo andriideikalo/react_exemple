@@ -119,28 +119,52 @@
 
 // video player_____________________________________
 
-import { useRef } from "react";
+// import { useRef } from "react";
 
-const Player = ({ source }) => {
-  const playerRef = useRef();
-  const play = () => playerRef.current.play();
-  const pause = () => playerRef.current.pause();
+// const Player = ({ source }) => {
+//   const playerRef = useRef();
+//   const play = () => playerRef.current.play();
+//   const pause = () => playerRef.current.pause();
+
+//   return (
+//     <div>
+//       <video ref={playerRef} src={source}>
+//         Sorry, your browser does not support embedded videos.
+//       </video>
+//       <div>
+//         <button onClick={play}>Play</button>
+//         <button onClick={pause}>Pause</button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// const App = () => {
+//   return <Player source="http://media.w3.org/2010/05/sintel/trailer.mp4" />;
+// };
+
+// ___________________________________
+import { useState } from "react";
+const App = ({ someProp }) => {
+  const [planets, setPlanets] = useState(["Earth", "Mars", "Jupiter", "Venus"]);
+  const [query, setQuery] = useState("");
+  const [clicks, setClicks] = useState(0);
+
+  const filteredPlanets = planets.filter((planet) => planet.includes(query));
 
   return (
     <div>
-      <video ref={playerRef} src={source}>
-        Sorry, your browser does not support embedded videos.
-      </video>
+      <div>Some prop: {someProp}</div>
+      <button onClick={() => setClicks(clicks + 1)}>
+        Number of clicks: {clicks}
+      </button>
       <div>
-        <button onClick={play}>Play</button>
-        <button onClick={pause}>Pause</button>
+        {filteredPlanets.map((planet) => (
+          <div key={planet}>{planet}</div>
+        ))}
       </div>
     </div>
   );
-};
-
-const App = () => {
-  return <Player source="http://media.w3.org/2010/05/sintel/trailer.mp4" />;
 };
 
 export default App;

@@ -34,14 +34,35 @@ import { useState, useEffect } from "react";
 
 // __________________________________________________
 
+// const App = () => {
+//   const [value, setValue] = useState(0);
+
+//   useEffect(() => {
+//     console.log("Mouting phase: same when componentDidMount runs");
+//   }, [value]);
+
+//   return <button onClick={() => setValue(value + 1)}>{value}</button>;
+// };
+
+// _________________________________________________
+
 const App = () => {
-  const [value, setValue] = useState(0);
-
+  const [firstValue, setFirstValue] = useState(0);
+  const [secondValue, setSecondValue] = useState(0);
   useEffect(() => {
-    console.log("Mouting phase: same when componentDidMount runs");
-  }, [value]);
+    console.log(firstValue + secondValue);
+  }, [firstValue, secondValue]);
 
-  return <button onClick={() => setValue(value + 1)}>{value}</button>;
+  return (
+    <>
+      <button onClick={() => setFirstValue(firstValue + 1)}>
+        First: {firstValue}
+      </button>
+      <button onClick={() => setSecondValue(firstValue + 1)}>
+        Second: {secondValue}
+      </button>
+    </>
+  );
 };
 
 export default App;

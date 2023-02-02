@@ -67,54 +67,80 @@
 
 // _________________________________________________
 
-import { createContext, useContext, useState } from "react";
+// import { createContext, useContext, useState } from "react";
 
-const UserContext = createContext();
+// const UserContext = createContext();
 
-export const useUser = () => useContext(UserContext);
+// export const useUser = () => useContext(UserContext);
 
-export const UserProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState(null);
+// export const UserProvider = ({ children }) => {
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+//   const [username, setUsername] = useState(null);
 
-  const logIn = () => {
-    setIsLoggedIn(true);
-    setUsername("Mango");
-  };
+//   const logIn = () => {
+//     setIsLoggedIn(true);
+//     setUsername("Mango");
+//   };
 
-  const logOut = () => {
-    setIsLoggedIn(false);
-    setUsername(null);
-  };
+//   const logOut = () => {
+//     setIsLoggedIn(false);
+//     setUsername(null);
+//   };
 
-  return (
-    <UserContext.Provider value={{ isLoggedIn, username, logIn, logOut }}>
-      {children}
-    </UserContext.Provider>
-  );
-};
+//   return (
+//     <UserContext.Provider value={{ isLoggedIn, username, logIn, logOut }}>
+//       {children}
+//     </UserContext.Provider>
+//   );
+// };
 
-export const UserMenu = () => {
-  const { isLoggedIn, username, logIn, logOut } = useUser();
+// export const UserMenu = () => {
+//   const { isLoggedIn, username, logIn, logOut } = useUser();
+
+//   return (
+//     <div>
+//       {isLoggedIn && <p>{username}</p>}
+//       {isLoggedIn ? (
+//         <button onClick={logOut}>Log out</button>
+//       ) : (
+//         <button onClick={logIn}>Log in</button>
+//       )}
+//     </div>
+//   );
+// };
+
+// const App = () => {
+//   return (
+//     <div>
+//       <UserMenu />
+//     </div>
+//   );
+// };
+
+// video player_____________________________________
+
+import { useRef } from "react";
+
+const Player = ({ source }) => {
+  const playerRef = useRef();
+  const play = () => playerRef.current.play();
+  const pause = () => playerRef.current.pause();
 
   return (
     <div>
-      {isLoggedIn && <p>{username}</p>}
-      {isLoggedIn ? (
-        <button onClick={logOut}>Log out</button>
-      ) : (
-        <button onClick={logIn}>Log in</button>
-      )}
+      <video ref={playerRef} src={source}>
+        Sorry, your browser does not support embedded videos.
+      </video>
+      <div>
+        <button onClick={play}>Play</button>
+        <button onClick={pause}>Pause</button>
+      </div>
     </div>
   );
 };
 
 const App = () => {
-  return (
-    <div>
-      <UserMenu />
-    </div>
-  );
+  return <Player source="http://media.w3.org/2010/05/sintel/trailer.mp4" />;
 };
 
 export default App;

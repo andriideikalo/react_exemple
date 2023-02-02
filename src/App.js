@@ -46,23 +46,53 @@ import { useState, useEffect } from "react";
 
 // _________________________________________________
 
-const App = () => {
-  const [firstValue, setFirstValue] = useState(0);
-  const [secondValue, setSecondValue] = useState(0);
-  useEffect(() => {
-    console.log(firstValue + secondValue);
-  }, [firstValue, secondValue]);
+// const App = () => {
+//   const [firstValue, setFirstValue] = useState(0);
+//   const [secondValue, setSecondValue] = useState(0);
+//   useEffect(() => {
+//     console.log(firstValue + secondValue);
+//   }, [firstValue, secondValue]);
+
+//   return (
+//     <>
+//       <button onClick={() => setFirstValue(firstValue + 1)}>
+//         First: {firstValue}
+//       </button>
+//       <button onClick={() => setSecondValue(firstValue + 1)}>
+//         Second: {secondValue}
+//       </button>
+//     </>
+//   );
+// };
+
+// _________________________________________________
+
+// ComponentA.jsx
+export const ComponentA = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <>
-      <button onClick={() => setFirstValue(firstValue + 1)}>
-        First: {firstValue}
-      </button>
-      <button onClick={() => setSecondValue(firstValue + 1)}>
-        Second: {secondValue}
-      </button>
+      <button onClick={openModal}>Open modal</button>
+      <div isOpen={isModalOpen} onClose={closeModal} />
     </>
   );
 };
 
-export default App;
+// ComponentB.jsx
+export const ComponentB = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  return (
+    <>
+      <button onClick={openModal}>Open modal</button>
+      <div isOpen={isModalOpen} onClose={closeModal} />
+    </>
+  );
+};
+
+export default ComponentA;

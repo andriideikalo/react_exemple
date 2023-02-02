@@ -15,7 +15,7 @@
 
 // ________________________________________________
 
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 
 // const App = () => {
 //   const [value, setValue] = useState(0);
@@ -67,32 +67,54 @@ import { useState, useEffect } from "react";
 
 // _________________________________________________
 
-// ComponentA.jsx
-export const ComponentA = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+import { createContext, useContext, useState } from "react";
+
+const UserContext = createContext();
+
+export const useUser = () => useContext(UserContext);
+
+export const UserProvider = ({ children }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState(null);
+
+  const logIn = () => {
+    setIsLoggedIn(true);
+    setUsername("Mango");
+  };
+
+  const logOut = () => {
+    setIsLoggedIn(false);
+    setUsername(null);
+  };
 
   return (
-    <>
-      <button onClick={openModal}>Open modal</button>
-      <div isOpen={isModalOpen} onClose={closeModal} />
-    </>
+    <UserContext.Provider value={{ isLoggedIn, username, logIn, logOut }}>
+      {children}
+    </UserContext.Provider>
   );
 };
 
-// ComponentB.jsx
-export const ComponentB = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+export const UserMenu = () => {
+  const { isLoggedIn, username, logIn, logOut } = useUser();
 
   return (
-    <>
-      <button onClick={openModal}>Open modal</button>
-      <div isOpen={isModalOpen} onClose={closeModal} />
-    </>
+    <div>
+      {isLoggedIn && <p>{username}</p>}
+      {isLoggedIn ? (
+        <button onClick={logOut}>Log out</button>
+      ) : (
+        <button onClick={logIn}>Log in</button>
+      )}
+    </div>
   );
 };
 
-export default ComponentA;
+const App = () => {
+  return (
+    <div>
+      <UserMenu />
+    </div>
+  );
+};
+
+export default App;
